@@ -1,0 +1,244 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(40deg, lightblue, rgb(196, 20, 205));
+}
+
+.small-font-size {
+  font-size: 0.8rem;
+}
+
+.avg-font-size {
+  font-size: 1rem;
+}
+
+.big-font-size {
+  font-size: 2rem;
+}
+
+.add-book-btn, .backtolib-btn {
+  display: block;
+  background-color: blue;
+  color: white;
+  border-radius: 15px;
+  padding: 1vw;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.add-book-btn:hover {
+  background-color: darkblue;
+}
+
+form {
+  width: min(50vw,600px);
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+fieldset {
+  margin-bottom: 15px;
+  width: 80%;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+label:last-of-type {
+  margin-bottom: 0;
+}
+
+label > p {
+  background: linear-gradient(110deg, white, rgb(88, 130, 255));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 600;
+  margin-bottom: 0.1vw;
+}
+
+input {
+  width: 100%;
+  min-height: 30px; 
+  padding: 0.5vw 1vw;
+  border-radius: 4px;
+  font-size: 1.4rem;
+  background-color: rgba(0, 0, 0, 0.207);
+  color: white;
+}
+
+.form-button {
+  width: 50%;
+}
+
+#form-add-book-btn, #form-edit-book-btn {
+  margin-bottom: 10px;
+}
+
+#user-books-table-section {
+  position: relative;
+}
+
+#user-books-table {
+  position: relative;
+  overflow-y: scroll;
+  max-height: 300px;
+  height: 300px;
+}
+
+#user-books-table::-webkit-scrollbar {
+  display: none;
+}
+
+#table-add-book-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(105%);
+}
+
+.table-container {
+  background-color: rgba(255, 255, 255, 0.432);
+  border: 2px solid black;
+  border-radius: 8px;
+}
+
+table {
+  padding: 2vw 1vw;
+  border-collapse: collapse;
+}
+
+thead th {
+  border-top: 0;
+}
+
+td, th {
+  min-width: 100px;
+  text-align: center;
+  border: 2px solid black;
+  border-right: 0;
+}
+
+.id-column, .thead-id-column {
+  min-width: max-content;
+  border-left: 0;
+  padding: 0.1vw;
+}
+
+tr td, thead th {
+  border-bottom: 0;
+  padding: 0.5vw;
+}
+
+form, 
+#user-books-table-section {
+  display: none;
+}
+
+#start-add-book-btn.deactivated {
+  display: none;
+}
+
+.delete-btn {
+  background: orchid;
+  color: white;
+  border: 1px solid blue;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background-color: red;
+  color: blanchedalmond;
+  border-color: brown;
+}
+
+.edit-btn {
+  background: rgb(112, 158, 218);
+  color: white;
+  border: 1px solid blue;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-btn:hover {
+  background-color: rgb(30, 101, 159);
+  color: rgb(255, 255, 255);;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-selected-option {
+  margin-right: 2vw;
+}
+
+.dropdown-select-container {
+  background-color: violet;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  vertical-align: middle;
+  cursor: pointer;
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.dropdown-select-container.active {
+  border-radius: 10px 10px 0px 0px;
+}
+
+.dropdown-select-container:hover {
+  background-color: darkviolet;
+}
+
+.dropdown-select-container.active:hover {
+  background-color: violet;
+}
+
+.dropdown-arrow {
+  user-select: none;
+}
+
+.dropdown-arrow.active{
+  rotate: 180deg;
+}
+
+.dropdown-menu {
+  background-color: darkviolet;
+  position: absolute;
+  width: 100%;
+  display: none;
+  border-radius: 0 0 10px 10px;
+  z-index: 1;
+}
+
+.dropdown-menu option{ 
+  margin-bottom: 5px;
+  cursor: pointer; 
+  padding-top: 0.1vw;
+  padding-bottom: 0.1vw;
+  color: white;
+}
+
+.dropdown-menu option:hover{ 
+  background-color: rgb(171, 83, 208);
+}
+
+.dropdown-menu option:last-of-type{ 
+  margin-bottom: 0;
+}
+
+.dropdown-menu.active {
+  display: block;
+}
+
+.dropdown-select-container, .dropdown-menu {
+  padding: 1vw;
+}

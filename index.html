@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="reset.css">
+  <title>Library app</title>
+</head>
+<body>
+  <div class="container"> 
+    <div id="app">
+      <button id="start-add-book-btn" class="add-book-btn big-font-size">Start adding a book!</button>
+      <form id="add-book-form">
+        <fieldset>
+          <label for="book-name-input">
+            <p>Book name</p>
+            <input id="book-name-input" type="text" name="book-name">
+          </label>
+          <label for="author-name-input">
+            <p>Author</p>
+            <input id="author-name-input" type="text" name="author-name">
+          </label>
+          <label for="pages-input">
+            <p>Number of pages</p>
+            <input id="pages-input" type="number" name="page-number">
+          </label>
+          <label for="bookstatus-dropdown">
+            <p>Book status</p>
+            <div id="bookstatus-dropdown" class="dropdown">
+              <div class="dropdown-select-container">
+                <p class="dropdown-selected-option">Completed</p>
+                <div class="dropdown-arrow">&#x25bc</div>
+              </div>
+              <ul class="dropdown-menu">
+                <option>Completed</option>
+                <option>Not finished</option>
+              </ul>
+            </div>
+          </label>
+        </fieldset>
+        <button id="form-add-book-btn" class="add-book-btn avg-font-size form-button">Add a book!</button>
+        <button id="back-to-lib-btn" class="backtolib-btn avg-font-size form-button" type="button">Go to Library</button>
+      </form>
+      <form id="edit-book-form">
+        <fieldset>
+          <label for="book-name-input">
+            <p>Book name</p>
+            <input id="book-name-input" class="paste-ready" type="text" name="book-name">
+          </label>
+          <label for="author-name-input">
+            <p>Author</p>
+            <input id="author-name-input" class="paste-ready" type="text" name="author-name">
+          </label>
+          <label for="pages-input">
+            <p>Number of pages</p>
+            <input id="pages-input" class="paste-ready" type="number" name="page-number">
+          </label>
+          <label for="bookstatus-dropdown">
+            <p>Book status</p>
+            <div id="edit-bookstatus-dropdown" class="dropdown">
+              <div class="dropdown-select-container">
+                <p class="dropdown-selected-option status-input paste-ready">Completed</p>
+                <div class="dropdown-arrow">&#x25bc</div>
+              </div>
+              <ul class="dropdown-menu">
+                <option>Completed</option>
+                <option>Not finished</option>
+              </ul>
+            </div>
+          </label>
+        </fieldset>
+        <button id="form-add-book-btn" class="add-book-btn avg-font-size form-button">Edit a book!</button>
+        <button id="edit-back-to-lib-btn" class="backtolib-btn avg-font-size form-button" type="button">Go to Library</button>
+      </form>
+      <div id="user-books-table-section">
+        <button id="table-add-book-btn" class="add-book-btn">Add a new book!</button>
+        <div id="user-books-table">
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th class="thead-id-column">ID</th>
+                  <th>Name</th>
+                  <th>Author</th>
+                  <th>Pages</th>
+                  <th class="last-column">Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
