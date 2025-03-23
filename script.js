@@ -1,3 +1,42 @@
+let booksStorage = {
+  books: [],
+  addBook(book) {
+    this.books.push(book);
+    this.giveIdToBooks();
+  },
+  editBook(value, bookId, userProperty) {
+    this.books[bookId][userProperty] = value; 
+  },
+  deleteBook(bookId){
+    this.books.splice(bookId, 1);
+    this.giveIdToBooks();
+  },
+  giveIdToBooks() {
+    for (let i = 0; i < this.books.length; i++){
+      this.books[i].id = i;
+    }
+  }
+}
+
+class Book  {
+  #editStatus = false;
+  constructor (name, author, pagesNum, status, id) {
+    this.name = name;
+    this.author = author;
+    this.pagesNum = pagesNum;
+    this.status = status;
+    this.id = id;
+  }
+
+  get editStatus() {
+    return this.#editStatus;
+  }
+
+  set editStatus(status) {
+    this.#editStatus = status;
+  }
+}
+
 function init() {
   let domStartBtn = document.getElementById("start-add-book-btn");
   let domForm = document.querySelector("#add-book-form");
@@ -20,7 +59,7 @@ function init() {
     addBook(book);
     hideForm();
     displayUserTable();
-    })  
+  })  
 
     domEditForm.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -32,7 +71,7 @@ function init() {
       editBook(bookObj);
       hideEditForm();
       displayUserTable();
-      }) 
+    }) 
 
     backToLib.addEventListener("click", ()=> {
       hideForm();
@@ -79,6 +118,8 @@ function hideForm() {
   domForm.style.display = "none";
   let domFormDropdown = document.getElementById("bookstatus-dropdown");
   removeInteractionFromDropdown(domFormDropdown);
+  domForm.reset();
+  saveTableData();
 }
 
 function hideEditForm() {
@@ -86,6 +127,8 @@ function hideEditForm() {
   domForm.style.display = "none";
   let domEditFormDropdown = document.getElementById("edit-bookstatus-dropdown");
   removeInteractionFromDropdown(domEditFormDropdown);
+  domForm.reset();
+  saveTableData();
 }
 
 function displayUserTable() {
@@ -98,53 +141,6 @@ function hideUserTable() {
   domUserTable.style.display = "none";
 }
 
-let booksStorage = {
-  books: [],
-  addBook(book) {
-    this.books.push(book);
-    this.giveIdToBooks();
-  },
-  editBook(value, bookId, userProperty) {
-    this.books[bookId][userProperty] = value; 
-  },
-  deleteBook(bookId){
-    this.books.splice(bookId, 1);
-  },
-  giveIdToBooks() {
-    for (let i = 0; i < this.books.length; i++){
-      this.books[i].bookID = i;
-    }
-  }
-}
-
-class Book  {
-  #bookID = 0;
-  #editStatus = false;
-  constructor (name, author, pagesNum, status) {
-  this.name = name;
-  this.author = author;
-  this.pagesNum = pagesNum;
-  this.status = status;
-  }
-
-  get bookID() {
-    return this.#bookID;
-  }
-
-  set bookID (id) {
-    this.#bookID = id;
-  }
-
-  get editStatus() {
-    return this.#editStatus;
-  }
-
-  set editStatus(status) {
-    this.#editStatus = status;
-  }
-}
-
-
 function addBook(book) {
   booksStorage.addBook(book);
   displayNewBookNote(booksStorage.books[booksStorage.books.length - 1]);
@@ -153,14 +149,13 @@ function addBook(book) {
 function editBook(bookObj) {
   let editedBookId;
   for (let i = 0; i < booksStorage.books.length; i++) {
-    if (booksStorage.books[i].editStatus === true){
-      // !!!! Try to develop more smarter decision with loop if number of keys in book object is big
+    if (booksStorage.books[i].editStatus === true) {
       booksStorage.books[i].name = bookObj.name;
       booksStorage.books[i].author = bookObj.author;
       booksStorage.books[i].pagesNum = bookObj.pagesNum;
       booksStorage.books[i].status = bookObj.status;
       booksStorage.books[i].editStatus = false;
-      editedBookId = booksStorage.books[i].bookID;
+      editedBookId = booksStorage.books[i].id;
     }
   }
 
@@ -168,7 +163,8 @@ function editBook(bookObj) {
 }
 
 function displayNewBookNote (book) {
-  let domBookTable = document.querySelector("tbody");
+  console.log(book.name);
+  let domBookTable = document.querySelector("table");
   let tableRow = document.createElement("tr");
   tableRow.classList.add("user-table-row");
   domBookTable.appendChild(tableRow);
@@ -176,25 +172,30 @@ function displayNewBookNote (book) {
   idTableCell.classList.add("id-column");
   tableRow.appendChild(idTableCell);
   displayIdBooks();
-  let bookValuesArray = Object.values(book);
-  let bookKeysArray = Object.keys(book);
 
-  //Loop extracting book values data into tablecells
-  for (let i = 0; i < bookValuesArray.length; i++) {
-    let tableCell = document.createElement("td");
-    if (bookKeysArray[i] === "status") {
-      let newDropdown = createDropdown(bookValuesArray[i], ["Completed", "Not finished"]);
-      newDropdown.classList.add("bookNoteRow-dropdown");
-      let dropdownSelectedOption = newDropdown.querySelector(".dropdown-selected-option");
-      dropdownSelectedOption.classList.add(`bookNote-cell-${bookKeysArray[i]}`);
-      tableCell.appendChild(newDropdown);
-      addInteractionToDropdown(newDropdown);
-    } else if (typeof bookValuesArray[i] === "string") {
-      tableCell.textContent = bookValuesArray[i];
-      tableCell.classList.add(`bookNote-cell-${bookKeysArray[i]}`);
-    }
-    tableRow.appendChild(tableCell);
-  }
+  let bookNameTableCell = document.createElement("td");
+  bookNameTableCell.classList.add(`bookNote-cell-name`);
+  tableRow.appendChild(bookNameTableCell);
+  bookNameTableCell.textContent = book.name;
+
+  let bookAuthorTableCell = document.createElement("td");
+  bookAuthorTableCell.textContent = book.author;
+  bookAuthorTableCell.classList.add(`bookNote-cell-author`);
+  tableRow.appendChild(bookAuthorTableCell);
+
+  let bookPagesNumTableCell = document.createElement("td");
+  bookPagesNumTableCell.textContent = book.pagesNum;
+  bookPagesNumTableCell.classList.add(`bookNote-cell-pagesNum`);
+  tableRow.appendChild(bookPagesNumTableCell);
+
+  let statusDropdownTableCell = document.createElement("td");
+  let newDropdown = createDropdown(book.status, ["Completed", "Not finished"]);
+  newDropdown.classList.add("bookNoteRow-dropdown");
+  let dropdownSelectedOption = newDropdown.querySelector(".dropdown-selected-option");
+  dropdownSelectedOption.classList.add(`bookNote-cell-status`);
+  statusDropdownTableCell.appendChild(newDropdown);
+  addInteractionToDropdown(newDropdown);
+  tableRow.appendChild(statusDropdownTableCell);
 
   //Creates delete button on table row
   let deleteTableCell = document.createElement("td");
@@ -249,7 +250,7 @@ function displayIdBooks () {
   booksStorage.giveIdToBooks();
   let idCellArray = document.getElementsByClassName("id-column");
   for (let i = 0; i < idCellArray.length; i++) {
-    idCellArray[i].textContent = booksStorage.books[i].bookID;
+    idCellArray[i].textContent = booksStorage.books[i].id;
   }
 }
 
@@ -310,11 +311,22 @@ function selectDropdownOption(event) {
 function removeInteractionFromDropdown (dropdown) {
   let domDropdownMenu = dropdown.querySelector(".dropdown-menu");
   let optionsList = domDropdownMenu.getElementsByTagName("option");
-
   dropdown.removeEventListener("click", showDropDownMenu);
   Array.from(optionsList).forEach((option) => {
     option.removeEventListener("click", selectDropdownOption)
   });
 }
 
+function saveTableData() {
+  localStorage.setItem("booksList", JSON.stringify(booksStorage.books));
+}
+
+function loadTableData () {
+  if (localStorage.getItem("booksList") !== null) {
+    booksStorage.books = JSON.parse(localStorage.getItem("booksList"));
+    booksStorage.books.forEach(element => displayNewBookNote(element));
+  }
+}
+
 init();
+loadTableData();
